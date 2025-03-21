@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Профиль Steam</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+<body>
+    <div class="container">
+        <h1>Информация о профиле Steam</h1>
+        <div class="profile-info">
+            {% if profile_info %}
+                <p><strong>Steam ID:</strong> {{ profile_info['steamid'] }}</p>
+                <p><strong>Никнейм:</strong> {{ profile_info['personaname'] }}</p>
+                <p><strong>Профиль URL:</strong> <a href="{{ profile_info['profileurl'] }}">{{ profile_info['profileurl'] }}</a></p>
+                <p><strong>Аватар:</strong> <img src="{{ profile_info['avatarfull'] }}" alt="Аватар"></p>
+                <p><strong>Статус:</strong> {{ profile_info['personastate'] }}</p>
+            {% else %}
+                <p>Информация о профиле недоступна.</p>
+            {% endif %}
+        </div>
+
+        <h2>Игры в библиотеке</h2>
+        {% if games %}
+            <p><strong>Всего игр:</strong> {{ games|length }}</p>
+            <ul class="games-list">
+                {% for game in games %}
+                    <li><strong>Игра:</strong> {{ game['name'] }}, <strong>Время в игре:</strong> {{ game['playtime_forever'] }} минут</li>
+                {% endfor %}
+            </ul>
+        {% else %}
+            <p>У пользователя нет игр в библиотеке.</p>
+        {% endif %}
+    </div>
+</body>
+</html>
